@@ -2,6 +2,8 @@
 
 按时间顺序记录，每条都是**实际卡住过**的，附根因和验证方式。
 
+**逆向目标**：暮瑟 2.4G 玩具 **产品编号 9333**（`BarCode`），心形头长柄款，`Wireless=2.4g`，`BroadcastPrefix="77 62 4d 53 45"`（ASCII `wbMSE`），`ServiceUuid` 为空 —— 纯广播接收端。下文所有帧与命令均在该型号上实测。
+
 ---
 
 ## 坑 1：照着反编译出来的字节发，设备一动不动
@@ -195,47 +197,7 @@ gear = floor((min(σ,80)/80)² × 10)
 
 ---
 
-## 坑 12：PowerShell 写文件写坏了中文注释，javac 直接失败
-
-**现象**：`javac: 非法字符: '\ufeff'`，以及注释里的中文变成乱码吞掉下一行代码。
-
-**根因**：Windows PowerShell 5.1 的 `Out-File -Encoding utf8` / `Set-Content -Encoding utf8` **会写 BOM**；`-replace` 处理含中文的多行字符串时还会吃掉换行，导致 `// 注释` 把下一行代码注释掉。
-
-**修法**：一律用
-
-```powershell
-[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.UTF8Encoding($false)))
-```
-
-且改代码优先用编辑工具而不是正则替换。
-
-**教训**：Windows 上做跨平台源码编辑，BOM 和换行是头号杀手。编译报错先看第一个字节。
-
----
-
-## 坑 13：没有 Gradle，怎么出 APK
-
-**做法**（Android SDK 完整时可用）：
-
-```powershell
-javac -source 8 -target 8 -bootclasspath android.jar -d classes (所有 .java)
-jar cf classes.jar -C classes .
-d8 --release --lib android.jar --min-api 26 --output out classes.jar
-aapt2 link -o base.apk -I android.jar --manifest AndroidManifest.xml \
-       --min-sdk-version 26 --target-sdk-version 33
-# 把 out/classes.dex 塞进 base.apk（zip 根目录）
-zipalign -f -p 4 unsigned.apk aligned.apk
-apksigner sign --ks debug.keystore --out MuseGear.apk aligned.apk
-```
-
-**注意**：
-- 不是 Gradle 项目也能出包，但**必须**手动把 `classes.dex` 放进 APK 根目录
-- `aapt2 link` 没有资源也能跑（会生成一个 40 字节的 `resources.arsc`）
-- 用同一个 keystore 签名才能覆盖安装
-
----
-
-## 坑 14：API「回传成功」不等于「设备动了」
+## 坑 12：API「回传成功」不等于「设备动了」
 
 **现象**：`/status` 显示 `gear:0`（成功），但没感觉。
 
@@ -255,7 +217,7 @@ apksigner sign --ks debug.keystore --out MuseGear.apk aligned.apk
 
 ---
 
-## 坑 15：长连接/熄屏后不动了
+## 坑 13：长连接/熄屏后不动了
 
 **现象**：手机锁屏几分钟后 API 失联或不再下发。
 

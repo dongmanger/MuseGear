@@ -2,6 +2,20 @@
 
 设备通过 BLE 广播接收指令。**帧长 11 字节**（单字节命令），由 `libble.so` 的 `get_rf_payload` 生成。
 
+## 目标设备
+
+| 字段 | 值 |
+|---|---|
+| 产品编号 | **9333**（说明书/包装上的 `BarCode`） |
+| 外形 | 心形头 + 长柄 |
+| `Wireless` | `2.4g` |
+| `BroadcastPrefix` | `77 62 4d 53 45`（ASCII `wbMSE`） |
+| `ServiceUuid` / `WriteUuid` | 空 → 无 GATT 通道，**纯广播接收端** |
+| `IsPrivateProtocol` | `0` → 用常量 `RAW_ADDRESS` |
+| `Func` | `classic` `music` `shake` `intera` `finger` `video` `game` |
+
+查询方式：`POST /muse_api/v1/device/getproductdetail`，body `{"barCode":"9333"}`。
+
 ## 一、Java 侧入口
 
 ```java

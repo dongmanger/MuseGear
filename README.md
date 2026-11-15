@@ -14,6 +14,9 @@ curl "http://<phone>:8899/pulse?hz=3&level=9"  # 3 Hz 脉冲
 curl "http://<phone>:8899/audio?on=1&mode=beat" # 跟着鼓点
 ```
 
+> **逆向目标：产品编号 `9333`**（心形头长柄款，2.4G 广播，`BroadcastPrefix = wbMSE`）。
+> 换型号只需改前缀与档位体系，协议层通用。
+
 暮瑟（`com.maxhom.weibu`）2.4G 情趣硬件的**独立控制器**：不依赖原厂 App、不登录、不联网、不喂积分。用一套逆向出来的广播帧协议直接驱动设备，并把控制面暴露成 HTTP API。
 
 > 本仓库只包含：**MuseGear 源码与成品 APK**、**原始样本 APK**、**逆向证据与协议文档**。
