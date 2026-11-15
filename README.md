@@ -1,6 +1,20 @@
 # MuseGear
 
-暮瑟（`com.maxhom.weibu`）2.4G 情趣硬件的**独立控制器**：不依赖原厂 App，用一套逆向出来的广播帧协议直接驱动设备，并把控制面暴露成 HTTP API。
+### 用一条 curl 控制你的玩具。
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Android%208.0%2B-3ddc84.svg)](#快速开始)
+[![Protocol](https://img.shields.io/badge/protocol-2.4G%20broadcast-d81b60.svg)](docs/protocol.md)
+[![Commands](https://img.shields.io/badge/commands-111%20mapped-informational.svg)](data/rf_table_full.json)
+[![API](https://img.shields.io/badge/HTTP%20API-14%20endpoints-00695c.svg)](docs/api.md)
+
+```bash
+curl "http://<phone>:8899/gear?level=5"      # 5 档
+curl "http://<phone>:8899/pulse?hz=3&level=9"  # 3 Hz 脉冲
+curl "http://<phone>:8899/audio?on=1&mode=beat" # 跟着鼓点
+```
+
+暮瑟（`com.maxhom.weibu`）2.4G 情趣硬件的**独立控制器**：不依赖原厂 App、不登录、不联网、不喂积分。用一套逆向出来的广播帧协议直接驱动设备，并把控制面暴露成 HTTP API。
 
 > 本仓库只包含：**MuseGear 源码与成品 APK**、**原始样本 APK**、**逆向证据与协议文档**。
 > 不包含任何个人账号、凭据或会话数据。
