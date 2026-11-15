@@ -1,0 +1,19 @@
+# build outputs
+app/build/
+app/classes/
+app/out/
+*.class
+*.dex
+*.idsig
+*.keystore
+*.jks
+
+# our own built apk lives in app/ and is committed; ignore stray ones
+MuseGear.apk
+MuseGear-*.apk.3
+
+# local notes / secrets
+token.txt
+*.env
+.env
+notes/
